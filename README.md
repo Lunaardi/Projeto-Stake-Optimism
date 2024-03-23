@@ -1,4 +1,4 @@
-Link da Apresentação:
+Link da Apresentação de criação:
 https://optprime.my.canva.site/hackathon
 
 App conectar a carteira:
