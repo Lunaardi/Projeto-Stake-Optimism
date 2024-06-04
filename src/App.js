@@ -1,38 +1,37 @@
-import { getMetaMaskProvider, transfer } from './MetaMaskServices';
-import { useState } from 'react';
-require("dotenv").config();
+import Web3 from "web3";
+import { getMetaMaskProvider, transfer, wallet } from "./MetaMaskServices"
+import config from './config.json'
+
+const walletDeposito = config.WALLET_DEPOSITO;
 
 function App() {
 
-  const [message, setMessage] = useState("");
+  async function transferClick() {
+    const walletConectada = await wallet();
 
-  function transferClick() {
-    transfer("0x2E72cbF5eeA8c97892FBB4be33fBdFBfF12C6e6A", process.env.WALLET_ADDRESS,
-      0.005).then(tx => setMessage(tx));
+    const valorInput = document.getElementById('valorStake').value;
+    if (!valorInput) {
+      alert('Por favor, insira um valor válido.');
+      return;
+    }
+
+    transfer(walletConectada, walletDeposito, Number(valorInput));
   }
-  /*  getAccount = async (e) => (
-     e.preventDefault();
-   try {
-     window.web3 = new Web3(window.ethereum);
-     const account = await window.ethereum.request(method: 'eth_requestAccount'));
-       alert(account[0]);
-   } catch (e) {
-     alert("error with Metamask")
-     console.log(e);
-   }
- } */
 
   return (
-    <div>
-      TESTE METAMASK
-      <br />
-      <button onClick={getMetaMaskProvider}>MetaMask</button>
-      <br />
-      <button onClick={transferClick}>Transfer</button>
-      <br />
-      {message}
-    </div>
-  );
+    <>
+      <div>
+        TESTE METAMASK
+        <br />
+        <button onClick={getMetaMaskProvider}>MetaMask</button>
+        <br />
+        <button onClick={transferClick}>Depositar</button>
+        <br />
+        <input type="number" placeholder="Valor do deposito" id='valorStake'></input>
+
+      </div >
+    </>
+  )
 }
 
-export default App;
+export default App

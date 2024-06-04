@@ -1,8 +1,8 @@
 import { Web3 } from 'web3';
+import config from './config.json'
 
-/* require("dotenv").config();
+const walletAdress = config.WALLET_ADDRESS
 const ABI = require('./abi.json');
-const myContract = process.env.WALLET_ADDRESS; */
 
 export async function getMetaMaskProvider() {
 
@@ -13,9 +13,16 @@ export async function getMetaMaskProvider() {
   const account = await web3.eth.requestAccounts();
   console.log(account);
 
+
   if (!account || !account.length) throw new Error('Permissao nao concedida');
 
   return web3;
+}
+export async function wallet() {
+  const web3 = new Web3(window.ethereum);
+  const wallet = await web3.eth.getAccounts();
+  const walletConectada = wallet[0];
+  return walletConectada
 }
 
 export async function transfer(from, to, quantity) {
@@ -124,3 +131,5 @@ web3.eth.getTransactionCount(TokenOwner, (err, count) => {
     });
 }
 }); */
+
+
